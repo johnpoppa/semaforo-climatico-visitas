@@ -1,0 +1,50 @@
+name: Ejecución Semáforo Climático Automático
+
+on:
+  schedule:
+    # Corre de lunes (1) a sábado (6) a las 12:00 UTC (9:00 AM de Argentina)
+    # y a las 18:00 UTC (3:00 PM de Argentina)
+    - cron: '0 12,18 * * 1-6'
+  workflow_dispatch: # Permite que lo ejecutes manualmente en cualquier momento
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar Código del Repositorio
+      uses: actions/checkout@v3
+
+    - name: Inicializar Entorno de Python
+      uses: actions/setup-python@v4
+      with: 
+        python-version: '3.10'
+
+    - name: Instalar Dependencias del Sistema
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests pandas matplotlib seaborn
+
+    - name: Ejecutar Extracción del Semáforo Climático
+      run: |
+        # Si usas tu propio archivo localidades.csv agrégalo como parámetro:
+        # python semaforo_climatico.py --localidades localidades.csv
+        python semaforo_climatico.py
+
+    - name: Ejecutar Análisis y Generar Alertas por Consola
+      run: |
+        python analisis_historico.py
+
+    - name: Generar Reporte Gráfico PNG
+      run: |
+        python graficador.py
+
+    # Guarda los reportes resultantes como descargas dentro del panel de Actions
+    - name: Guardar Resultados en GitHub (Artefactos)
+      uses: actions/upload-artifact@v3
+      with:
+        name: Reportes_Climaticos
+        path: |
+          riesgo_climatico.csv
+          riesgo_climatico_previo.csv
+          distribucion_alertas.png
