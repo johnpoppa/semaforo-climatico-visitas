@@ -1,8 +1,5 @@
 ### 🚀 Guía de Configuración para GitHub Actions (Actualizado a Node.js 24/v4/v5)
 
-Crea un archivo en tu repositorio de GitHub con la ruta exacta `.github/workflows/semaforo.yml` e introduce el siguiente contenido corregido con las dependencias actualizadas que resuelven la advertencia de depreciación de Node.js 20:
-
-```yaml
 name: Ejecución Semáforo Climático Automático
 
 on:
