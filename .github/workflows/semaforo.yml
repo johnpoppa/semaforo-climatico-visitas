@@ -1,5 +1,8 @@
-### 🚀 Guía de Configuración para GitHub Actions (Actualizado v4)
+### 🚀 Guía de Configuración para GitHub Actions (Actualizado a Node.js 24/v4/v5)
 
+Crea un archivo en tu repositorio de GitHub con la ruta exacta `.github/workflows/semaforo.yml` e introduce el siguiente contenido corregido con las dependencias actualizadas que resuelven la advertencia de depreciación de Node.js 20:
+
+```yaml
 name: Ejecución Semáforo Climático Automático
 
 on:
@@ -15,10 +18,10 @@ jobs:
 
     steps:
     - name: Descargar Código del Repositorio
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4  # Utiliza la versión más reciente compatible con Node 24
 
     - name: Inicializar Entorno de Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v5  # Actualizado internamente para usar Node 24
       with:
         python-version: '3.10'
 
@@ -39,7 +42,7 @@ jobs:
       run: |
         python graficador.py
 
-    # Guardando resultados con la versión v4 compatible
+    # Guardando resultados con la versión v4 compatible con Node 24
     - name: Guardar Resultados en GitHub (Artefactos)
       uses: actions/upload-artifact@v4
       with:
