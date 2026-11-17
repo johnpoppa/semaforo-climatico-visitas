@@ -1,8 +1,5 @@
 ### 🚀 Guía de Configuración para GitHub Actions (Actualizado v4)
 
-Crea un archivo en tu repositorio de GitHub con la ruta exacta `.github/workflows/semaforo.yml` e introduce el siguiente contenido corregido con las dependencias actualizadas:
-
-```yaml
 name: Ejecución Semáforo Climático Automático
 
 on:
