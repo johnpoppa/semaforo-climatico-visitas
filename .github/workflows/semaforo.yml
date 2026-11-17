@@ -1,5 +1,7 @@
 ### 🚀 Guía de Configuración para GitHub Actions (Actualizado a Node.js 24/v4/v5)
 
+### 🚀 Guía de Configuración para GitHub Actions (Actualizado: Auto-Guardar en Repositorio)
+
 name: Ejecución Semáforo Climático Automático
 
 on:
@@ -15,10 +17,10 @@ jobs:
 
     steps:
     - name: Descargar Código del Repositorio
-      uses: actions/checkout@v4  # Utiliza la versión más reciente compatible con Node 24
+      uses: actions/checkout@v4
 
     - name: Inicializar Entorno de Python
-      uses: actions/setup-python@v5  # Actualizado internamente para usar Node 24
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
@@ -39,12 +41,11 @@ jobs:
       run: |
         python graficador.py
 
-    # Guardando resultados con la versión v4 compatible con Node 24
-    - name: Guardar Resultados en GitHub (Artefactos)
-      uses: actions/upload-artifact@v4
-      with:
-        name: Reportes_Climaticos
-        path: |
-          riesgo_climatico.csv
-          riesgo_climatico_previo.csv
-          distribucion_alertas.png
+    # NUEVO PASO: Guarda y sube los archivos directamente a tu repositorio principal
+    - name: Guardar cambios directamente en el repositorio de GitHub
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add riesgo_climatico.csv riesgo_climatico_previo.csv distribucion_alertas.png
+        # Solo hacer commit si hubo cambios en los archivos para evitar errores
+        git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Auto-actualización de reportes climáticos [Skip GitHub Actions]" && git push)
