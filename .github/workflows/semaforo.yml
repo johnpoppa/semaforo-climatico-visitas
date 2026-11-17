@@ -1,3 +1,8 @@
+### 🚀 Guía de Configuración para GitHub Actions (Actualizado v4)
+
+Crea un archivo en tu repositorio de GitHub con la ruta exacta `.github/workflows/semaforo.yml` e introduce el siguiente contenido corregido con las dependencias actualizadas:
+
+```yaml
 name: Ejecución Semáforo Climático Automático
 
 on:
@@ -13,11 +18,11 @@ jobs:
 
     steps:
     - name: Descargar Código del Repositorio
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Inicializar Entorno de Python
-      uses: actions/setup-python@v4
-      with: 
+      uses: actions/setup-python@v5
+      with:
         python-version: '3.10'
 
     - name: Instalar Dependencias del Sistema
@@ -27,8 +32,6 @@ jobs:
 
     - name: Ejecutar Extracción del Semáforo Climático
       run: |
-        # Si usas tu propio archivo localidades.csv agrégalo como parámetro:
-        # python semaforo_climatico.py --localidades localidades.csv
         python semaforo_climatico.py
 
     - name: Ejecutar Análisis y Generar Alertas por Consola
@@ -39,9 +42,9 @@ jobs:
       run: |
         python graficador.py
 
-    # Guarda los reportes resultantes como descargas dentro del panel de Actions
+    # Guardando resultados con la versión v4 compatible
     - name: Guardar Resultados en GitHub (Artefactos)
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Reportes_Climaticos
         path: |
